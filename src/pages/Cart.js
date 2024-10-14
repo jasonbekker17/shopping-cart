@@ -1,21 +1,31 @@
 import React from 'react'
-import Card from '../components/Card'
+import { useSelector } from 'react-redux';
 import useTitle from '../Hooks.js/useTitle'
+import ProductCard from '../components/ProductCard';
+
+
+
+
 
 function Cart({title}) {
-  useTitle(title)
-  return (
-   <main>
-    <section className='content-center items-center max-w-7xl mx-auto py-7 mt-20 '>
-      
-    
-    <div className=' '>
-    <h1 className=' bold text-3xl  '> Cart Items: 2</h1>
-      <Card/>
-    </div>
-    </section>
+  const products=useSelector(state=>state.cartState.cartList)
+  const total=useSelector(state=>state.cartState.total)
+  useTitle(title);
 
-   </main>
+
+  return (
+<main>
+  
+      
+      <section className="cart">
+        <h1>Cart Items: {products.length}/${total}</h1>
+        { products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        )) }        
+      </section>
+  
+</main>
+
   )
 }
 
